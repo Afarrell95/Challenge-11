@@ -1,9 +1,16 @@
-const express = require("express");
+const router = require("express").Router();
 
 const db = require("../db/db.json");
 
-const app = express();
+router.get("/notes", (req, res) => {
+  getNotes().then((notes) => {
+    res.json(notes);
+  });
+});
 
-app.use("/db", db);
-
-module.exports = app;
+router.post("/", async (req, res) => {
+  saveNote().then((note) => {
+    res.json(note);
+  });
+});
+module.exports = router;
