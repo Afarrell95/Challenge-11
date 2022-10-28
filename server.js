@@ -1,7 +1,9 @@
 const express = require("express");
 const path = require("path");
-const dbRoutes = require("./Develop/controllers/api/dbRoutes");
-const htmlRoutes = require("./Develop/controllers/api/htmlRoute");
+const dbRoutes = require("./Develop/controllers/dbRoutes");
+const htmlRoutes = require("./Develop/controllers/htmlRoute");
+const fs = require("fs");
+// const apiRoutes = require("./Develop/controllers/index");
 
 const app = express();
 
@@ -14,6 +16,8 @@ app.use(express.static("public"));
 
 //   res.sendFile("/index.html");
 // });
+app.use("/api", dbRoutes);
+app.use("/", htmlRoutes);
 
 app.listen(PORT, () => {
   console.log("Server listening on: http://localhost:" + PORT);
