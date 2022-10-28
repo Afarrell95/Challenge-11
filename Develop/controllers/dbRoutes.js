@@ -1,25 +1,24 @@
 const router = require("express").Router();
+const fs = require("fs");
 
 const db = require("../db/db.json");
 
 router.get("/notes", (req, res) => {
-  db.getNotes().then((notes) => {
+  fs.readFile("../db/db.json").then((data) => {
+    const notes = JSON.parse(data);
     return res.json(notes);
   });
 });
-
 router.post("/notes", (req, res) => {
-  let newNote = req.body;
-  db.push(newNote);
-  saveNote().then((note) => {
-    return res.json(note);
+  fs.readFile("../db/db.json").then((data) => {
+    const notes = JSON.parse(data);
+    const newNote = req.body;
+    db.create(newNote);
+    saveNote().then((newNote) => {
+      res.json(newNote);
+      notes.push(newNote);
+    });
   });
 });
 
-router.delete("/notes/:id", (req, res) => {
-  db.splice(req.params.id, 1);
-  updateDb();
-  console.log("Deleted note with id " + req.params.id);
-  res.json("Note has been deleted!");
-});
 module.exports = router;
