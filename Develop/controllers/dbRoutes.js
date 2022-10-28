@@ -3,13 +3,13 @@ const fs = require("fs");
 
 const db = require("../db/db.json");
 
-router.get("/notes", (req, res) => {
+router.get("/api/notes", (req, res) => {
   fs.readFile("../db/db.json").then((data) => {
     const notes = JSON.parse(data);
     return res.json(notes);
   });
 });
-router.post("/notes", (req, res) => {
+router.post("/api/notes", (req, res) => {
   fs.readFile("../db/db.json").then((data) => {
     const notes = JSON.parse(data);
     const newNote = req.body;
